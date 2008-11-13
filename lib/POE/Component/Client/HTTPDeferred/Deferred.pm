@@ -23,6 +23,8 @@ has callbacks => (
     default => sub { [] },
 );
 
+__PACKAGE__->meta->make_immutable;
+
 sub cancel {
     my $self = shift;
     $poe_kernel->post( $self->client_alias => cancel => $self->request );
