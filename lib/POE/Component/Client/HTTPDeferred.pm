@@ -23,24 +23,56 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-POE::Component::Client::HTTPDeferred - Module abstract (<= 44 characters) goes here
+POE::Component::Client::HTTPDeferred - Yet another poco http client with twist like deferred interface.
 
 =head1 SYNOPSIS
 
-  use POE::Component::Client::HTTPDeferred;
-  blah blah blah
+    use POE qw/Component::Client::HTTPDeferred/;
+    use HTTP::Request::Common;
+    
+    POE::Session->create(
+        inline_states => {
+            _start => sub {
+                my $ua = POE::Component::Client::HTTPDeferred->new;
+                my $d  = $ua->request( GET 'http://example.com/' );
+    
+                $d->addBoth(sub {
+                    my $res = shift;
+    
+                    if ($res->is_success) {
+                        print $res->as_string;
+                    }
+                    else {
+                        warn $res->status_line;
+                    }
+    
+                    $ua->shutdown;
+                });
+            },
+        },
+    );
+    POE::Kernel->run;
 
 =head1 DESCRIPTION
 
-Stub documentation for this module was created by ExtUtils::ModuleMaker.
-It looks like the author of the extension was negligent enough
-to leave the stub unedited.
+POE::Component::Client::HTTPDeferred is a wrapper module to add twist (or MochiKit) like callback interface to POE::Component::Client::HTTP.
 
-Blah blah blah.
+To use this module, you can use code reference as response callback. So you don't have to create POE state for handling response.
+
+=head1 SEE ALSO
+
+L<POE::Component::Client::HTTPDeferred::Deferred>
 
 =head1 METHODS
 
 =head2 new
+
+Create POE::Component::Client::HTTPDeferred instance.
+
+    my $ua = POE::Component::Client::HTTPDeferred->new;
+
+Once you call this, POE::Component::Client::HTTPDeferred will start POE::Session for own use. 
+So you need to call ->shutdown method to stop the session.
 
 =cut
 
@@ -57,6 +89,12 @@ sub BUILD {
 }
 
 =head2 request
+
+Send HTTP request and return Deferred object (L<POE::Component::Client::HTTPDeferred::Deferred>).
+
+    my $d = $ua->request($request);
+
+This $request argument should be HTTP::Request object.
 
 =cut
 
@@ -75,6 +113,8 @@ sub request {
 
 =head2 shutdown
 
+Shutdown POE::Component::Client::HTTPDeferred session.
+
 =cut
 
 sub shutdown {
@@ -83,6 +123,8 @@ sub shutdown {
 }
 
 =head1 POE METHODS
+
+Internal POE methods.
 
 =head2 poe__start
 
