@@ -7,6 +7,8 @@ requires 'POE::Component::Client::HTTP';
 requires 'Moose';
 
 test_requires 'Test::More';
+test_requires 'HTTP::Request::Common';
+
 use_test_base;
 auto_include;
 WriteAll;

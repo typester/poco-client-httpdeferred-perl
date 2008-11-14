@@ -1,7 +1,7 @@
 package POE::Component::Client::HTTPDeferred;
 use Moose;
 
-our $VERSION = '0.01';
+our $VERSION = '0.01001';
 
 use POE qw/
     Component::Client::HTTP
