@@ -1,5 +1,5 @@
 package POE::Component::Client::HTTPDeferred::Deferred;
-use Moose;
+use Any::Moose;
 
 use POE;
 
@@ -23,7 +23,7 @@ has callbacks => (
     default => sub { [] },
 );
 
-__PACKAGE__->meta->make_immutable;
+no Any::Moose;
 
 =head1 NAME
 
@@ -160,4 +160,4 @@ LICENSE file included with this module.
 
 =cut
 
-1;
+__PACKAGE__->meta->make_immutable;

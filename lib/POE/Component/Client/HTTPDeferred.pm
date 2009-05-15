@@ -1,5 +1,5 @@
 package POE::Component::Client::HTTPDeferred;
-use Moose;
+use Any::Moose;
 
 our $VERSION = '0.01001';
 
@@ -19,7 +19,7 @@ has session => (
     isa => 'POE::Session',
 );
 
-__PACKAGE__->meta->make_immutable;
+no Any::Moose;
 
 =head1 NAME
 
@@ -153,7 +153,7 @@ sub poe_response {
     my ($self, $kernel) = @_[OBJECT, KERNEL];
     my ($req, $res)     = ($_[ARG0]->[0], $_[ARG1]->[0]);
 
-    my $d = delete $req->{_deferred} or confess 'deferred object not found';
+    my $d = delete $req->{_deferred} or Carp::confess 'deferred object not found';
 
     if ($res->is_success) {
         $d->callback($res);
@@ -167,7 +167,9 @@ sub poe_response {
 
 Daisuke Murase <typester@cpan.org>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (c) 2008-2009 by KAYAC Inc.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
@@ -177,4 +179,4 @@ LICENSE file included with this module.
 
 =cut
 
-1;
+__PACKAGE__->meta->make_immutable;

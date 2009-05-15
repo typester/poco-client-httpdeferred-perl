@@ -4,7 +4,7 @@ all_from 'lib/POE/Component/Client/HTTPDeferred.pm';
 
 requires 'POE';
 requires 'POE::Component::Client::HTTP';
-requires 'Moose';
+requires 'Any::Moose';
 
 test_requires 'Test::More';
 test_requires 'HTTP::Request::Common';
