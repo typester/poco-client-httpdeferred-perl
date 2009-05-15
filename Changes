@@ -1,5 +1,8 @@
 Revision history for Perl extension POE::Component::Client::HTTPDeferred
 
+0.02 2009-05-15T11:31:09+09:00
+     - switch to Any::Moose
+
 0.01001 2008-11-14T16:03:36+09:00
      - added missing build requires: 'HTTP::Request::Common'
 

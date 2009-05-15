@@ -1,7 +1,7 @@
 package POE::Component::Client::HTTPDeferred;
 use Any::Moose;
 
-our $VERSION = '0.01001';
+our $VERSION = '0.02';
 
 use POE qw/
     Component::Client::HTTP
